@@ -22,29 +22,29 @@ public:
     void setBoard() {
         int x = BoardSize * BoardSize;
         for (int i = 1; i <= x; i++)
-            board[i] = 0;
+            board[i] = 0;              //cells with value 0 are those who don't have any snake or ladder
         vector<int>v;
         for (int i = 1; i < x; i++)
             v.push_back(i);
         int p = NumberOfLadders;
         while (p--) {
             int s = rand() % v.size();
-            int start = v[s];
+            int cell1 = v[s];
             v.erase(v.begin() + s);
             int t = rand() % v.size();
-            int end = v[t];
+            int cell2 = v[t];
             v.erase(v.begin() + t);
-            board[start] = end;
+            board[min(cell1, cell2)] = max(cell1, cell2); //cells with greater value are ladders
         }
         p = NumberOfSnakes;
         while (p--) {
             int s = rand() % v.size();
-            int start = v[s];
+            int cell1 = v[s];
             v.erase(v.begin() + s);
             int t = rand() % v.size();
-            int end = v[t];
+            int cell2 = v[t];
             v.erase(v.begin() + t);
-            board[end] = start;
+            board[max(cell1, cell2)] = min(cell1, cell2); //cells with smaller values are snakes
         }
     }
 
@@ -55,9 +55,12 @@ public:
     int destinationcell() {
         return Destination;
     }
-    void show() {
-        for (int i = 1; i <= Destination; i++) cout << board[i] << ' ';
-        cout << endl;
+    void showBoard() {
+        for (int i = 1; i <= Destination; i++) {
+            cout << board[i] << ' ';
+            if (i % BoardSize == 0)
+                cout << endl;
+        }
     }
     int dice() {
         return 1 + rand() % 6;
@@ -99,6 +102,8 @@ int main() {
 
     Game SnakeAndLadder(boardsize);
     SnakeAndLadder.setBoard();
+    cout << "This is your board:\n(Cells are numbered from tom to bottom, left to right, so leftmost cell in the topmost row is starting position and rightmost cell in the bottommost row is the destination)\n";
+    SnakeAndLadder.showBoard();
     string name;
     cout << "Enter name of the first player\n";
     cin >> name;
@@ -108,16 +113,16 @@ int main() {
     player p2(name);
     int rolldie;
     while (MaxMoves--) {
-        cout << p1.NameofPlayer() << "'s turn, enter any number to roll the die\n";
+        cout << "It is " << p1.NameofPlayer() << "'s turn, enter any number to roll the die\n";
         cin >> rolldie;
         int p1roll = SnakeAndLadder.dice();
         p1.move(p1roll, SnakeAndLadder);
-        cout << p2.NameofPlayer() << "'s turn, enter any number to roll the die\n";
+        if (p1.currentPosition() == destination) break;
+        cout << "It is " << p2.NameofPlayer() << "'s turn, enter any number to roll the die\n";
         cin >> rolldie;
         int p2roll = SnakeAndLadder.dice();
         p2.move(p2roll, SnakeAndLadder);
-        if (p1.currentPosition() == destination || p2.currentPosition() == destination)
-            break;
+        if (p2.currentPosition() == destination) break;
     }
     if (p1.currentPosition() > p2.currentPosition())
         cout << p1.NameofPlayer() << " won!" << endl;
