@@ -99,7 +99,6 @@ int main() {
 
     Game SnakeAndLadder(boardsize);
     SnakeAndLadder.setBoard();
-    SnakeAndLadder.show();
     string name;
     cout << "Enter name of the first player\n";
     cin >> name;
