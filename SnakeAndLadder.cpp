@@ -116,15 +116,19 @@ int main() {
         cout << "It is " << p1.NameofPlayer() << "'s turn, enter any number to roll the die\n";
         cin >> rolldie;
         int p1roll = SnakeAndLadder.dice();
+        cout<<"The die showed "<<p1roll<<'!'<<endl;
         p1.move(p1roll, SnakeAndLadder);
         cout << "new position of " << p1.NameofPlayer() << " is " << p1.currentPosition() << endl;
         if (p1.currentPosition() == destination) break;
+        cout<<endl;
         cout << "It is " << p2.NameofPlayer() << "'s turn, enter any number to roll the die\n";
         cin >> rolldie;
         int p2roll = SnakeAndLadder.dice();
+        cout<<"The die showed "<<p2roll<<'!'<<endl;
         p2.move(p2roll, SnakeAndLadder);
         cout << "new position of " << p2.NameofPlayer() << " is " << p2.currentPosition() << endl;
         if (p2.currentPosition() == destination) break;
+        cout<<endl;
     }
     if (p1.currentPosition() > p2.currentPosition())
         cout << p1.NameofPlayer() << " won!" << endl;
