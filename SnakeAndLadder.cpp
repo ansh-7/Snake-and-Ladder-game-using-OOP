@@ -117,11 +117,13 @@ int main() {
         cin >> rolldie;
         int p1roll = SnakeAndLadder.dice();
         p1.move(p1roll, SnakeAndLadder);
+        cout << "new position of " << p1.NameofPlayer() << " is " << p1.currentPosition() << endl;
         if (p1.currentPosition() == destination) break;
         cout << "It is " << p2.NameofPlayer() << "'s turn, enter any number to roll the die\n";
         cin >> rolldie;
         int p2roll = SnakeAndLadder.dice();
         p2.move(p2roll, SnakeAndLadder);
+        cout << "new position of " << p2.NameofPlayer() << " is " << p2.currentPosition() << endl;
         if (p2.currentPosition() == destination) break;
     }
     if (p1.currentPosition() > p2.currentPosition())
